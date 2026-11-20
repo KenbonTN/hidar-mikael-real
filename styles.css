@@ -1,0 +1,329 @@
+:root {
+  --ink: #22130a;
+  --red: #b3261e;
+  --redD: #7d1712;
+  --gold: #f2b632;
+  --green: #1f7a3d;
+  --blue: #1d4e9e;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #0f0704;
+  overflow: hidden;
+}
+
+body.idle { cursor: none; }
+
+#viewport { position: fixed; inset: 0; }
+
+/* A fixed 1920×1080 stage, scaled by app.js to fill whatever screen it is on. */
+#stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: center;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: "Noto Serif Ethiopic", "Abyssinica SIL", "Kefa", "Nyala", serif;
+  background:
+    radial-gradient(ellipse at 28% 45%, #fdf4d9 0%, #f3e2b6 55%, #dfc48c 100%);
+}
+
+/* Woven harag bands, top and bottom, edged in green, gold and red. */
+.band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: var(--redD);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50' preserveAspectRatio='none'%3E%3Crect width='100' height='50' fill='%237d1712'/%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M0,25 C17,2 33,2 50,25 S83,48 100,25' stroke='%2322130a' stroke-width='10'/%3E%3Cpath d='M0,25 C17,48 33,48 50,25 S83,2 100,25' stroke='%2322130a' stroke-width='10'/%3E%3Cpath d='M0,25 C17,2 33,2 50,25 S83,48 100,25' stroke='%23f2b632' stroke-width='5.5'/%3E%3Cpath d='M0,25 C17,48 33,48 50,25 S83,2 100,25' stroke='%23f2b632' stroke-width='5.5'/%3E%3C/g%3E%3Ccircle cx='25' cy='25' r='5.5' fill='%231f7a3d'/%3E%3Ccircle cx='75' cy='25' r='5.5' fill='%231d4e9e'/%3E%3C/svg%3E");
+  background-size: 96px 50px;
+  background-repeat: repeat-x;
+  z-index: 3;
+}
+.band.top { top: 0; box-shadow: 0 5px 0 var(--green), 0 10px 0 var(--gold), 0 15px 0 var(--red); }
+.band.bottom { bottom: 0; box-shadow: 0 -5px 0 var(--green), 0 -10px 0 var(--gold), 0 -15px 0 var(--red); }
+
+/* ---------- text side ---------- */
+
+#textside { transition: opacity .22s ease; }
+#textside.out { opacity: 0; }
+
+#label {
+  position: absolute;
+  left: 80px;
+  top: 92px;
+  width: 1070px;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+}
+#label h2 {
+  margin: 0;
+  font-size: 60px;
+  line-height: 1.2;
+  font-weight: 800;
+  color: var(--red);
+  white-space: nowrap;
+}
+#label .orn {
+  flex: 1;
+  height: 10px;
+  border-top: 3px solid var(--red);
+  border-bottom: 3px solid var(--red);
+}
+#label .dia {
+  width: 20px;
+  height: 20px;
+  background: var(--gold);
+  border: 3px solid var(--ink);
+  transform: rotate(45deg);
+  flex: none;
+}
+#stage.is-title #label { display: none; }
+
+#body {
+  position: absolute;
+  left: 80px;
+  top: 212px;
+  width: 1070px;
+  height: 750px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#stage.is-title #body { top: 100px; height: 880px; }
+
+#content {
+  width: 100%;
+  text-align: center;
+  line-height: 1.5;
+  font-weight: 600;
+  font-size: 60px;
+  text-wrap: pretty;
+}
+#content p { margin: 0; }
+#content .line { margin: 0; text-wrap: balance; }
+#content .line + .line {
+  margin-top: .55em;
+  padding-top: .55em;
+  border-top: .05em solid rgba(125, 23, 18, .35);
+}
+#content.wereb { font-weight: 800; line-height: 1.4; }
+#content.nowrap .line { white-space: nowrap; }
+
+.holy { color: var(--red); font-weight: 800; }
+.punc { color: var(--red); }
+
+/* How many times a line is sung. */
+.rep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: .3em;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff3d0;
+  font-size: .6em;
+  font-weight: 800;
+  line-height: 1;
+  vertical-align: .22em;
+  box-shadow: 0 0 0 .1em var(--gold), 0 0 0 .18em var(--ink);
+}
+
+#content.title .t1 { font-size: 1em; font-weight: 800; color: var(--red); line-height: 1.25; }
+#content.title .t2 { font-size: .62em; font-weight: 800; line-height: 1.4; margin-top: .25em; }
+#content.title .t3 { font-size: .5em; font-weight: 600; color: var(--redD); line-height: 1.4; margin-top: .3em; }
+#content.title .rule {
+  width: 60%;
+  height: 10px;
+  margin: .28em auto 0;
+  border-top: 3px solid var(--red);
+  border-bottom: 3px solid var(--red);
+}
+
+/* ---------- picture side: an arched icon frame ---------- */
+
+#frame {
+  position: absolute;
+  left: 1240px;
+  top: 115px;
+  width: 600px;
+  height: 850px;
+  border-radius: 300px 300px 16px 16px;
+  overflow: hidden;
+  background: #000;
+  box-shadow:
+    0 0 0 6px var(--ink),
+    0 0 0 18px var(--gold),
+    0 0 0 23px var(--ink),
+    0 0 0 33px var(--red),
+    0 0 0 38px var(--ink),
+    0 18px 40px 30px rgba(60, 30, 5, .3);
+}
+#sceneWrap { position: absolute; inset: 0; transition: opacity .35s ease; }
+#sceneWrap.out { opacity: 0; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#sceneWrap.flat #gl { display: none; }
+#scene { position: absolute; inset: 0; }
+#scene svg { width: 100%; height: 100%; display: block; }
+
+#count {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 50px;
+  transform: translateX(-50%);
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  background: var(--redD);
+  border-left: 4px solid var(--gold);
+  border-right: 4px solid var(--gold);
+  color: var(--gold);
+  font-size: 30px;
+  font-weight: 800;
+  z-index: 4;
+}
+
+#hint {
+  position: fixed;
+  left: 50%;
+  bottom: 9vh;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: rgba(20, 10, 4, .86);
+  color: #f6e3b0;
+  font: 600 18px/1.3 system-ui, sans-serif;
+  transition: opacity .8s ease;
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+}
+#hint.gone { opacity: 0; }
+
+/* ---------- scene animation ---------- */
+
+#scene svg * { transform-origin: 0 0; }
+
+.tw { animation: tw 3.4s ease-in-out infinite; }
+@keyframes tw { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+
+.pulse { animation: pulse 4.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+
+.bob { animation: bob 4.4s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+.fall { animation: fall 7s linear infinite; }
+@keyframes fall {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(var(--d, 440px)); opacity: 0; }
+}
+
+.rise { animation: rise 8s linear infinite; }
+@keyframes rise {
+  0% { transform: translateY(0); opacity: 0; }
+  12% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateY(-520px); opacity: 0; }
+}
+
+.ascend { animation: ascend 9s ease-in-out infinite; }
+@keyframes ascend {
+  0% { transform: translateY(170px); opacity: 0; }
+  12% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { transform: translateY(-190px); opacity: 0; }
+}
+
+.flash { animation: flash 5s linear infinite; }
+@keyframes flash {
+  0%, 100% { opacity: 0; }
+  62% { opacity: 0; }
+  64% { opacity: .95; }
+  67% { opacity: .1; }
+  70% { opacity: .85; }
+  76% { opacity: 0; }
+}
+
+.shimmer { animation: shimmer 2.6s ease-in-out infinite; }
+@keyframes shimmer { 0%, 100% { opacity: 0; } 50% { opacity: .5; } }
+
+.flow { animation: flow 1.1s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+
+.foam { animation: foam 1.6s linear infinite; }
+@keyframes foam { to { stroke-dashoffset: -23; } }
+
+.ripple { transform-box: fill-box; transform-origin: center !important; animation: ripple 2.4s ease-out infinite; }
+@keyframes ripple { 0% { transform: scale(.3); opacity: 1; } 100% { transform: scale(2.3); opacity: 0; } }
+
+.drift { animation: drift 5s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
+
+.swim { animation: swim 7s ease-in-out infinite alternate; }
+@keyframes swim { from { transform: translateX(-22px); } to { transform: translateX(22px); } }
+
+/* The people walking the dry road through the sea, away towards the far shore. */
+.walk { animation: walk 18s linear infinite; }
+@keyframes walk {
+  0% { transform: translate(calc(300px + var(--dx)), 930px) scale(1.9); opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translate(calc(300px + var(--dx) * .12), 268px) scale(.2); opacity: 0; }
+}
+
+.puff { transform-box: fill-box; transform-origin: center !important; animation: puff 9s ease-out infinite; }
+@keyframes puff {
+  0% { transform: translate(0, 0) scale(.5); opacity: 0; }
+  10% { opacity: .75; }
+  100% { transform: translate(var(--sx, 0px), -500px) scale(3); opacity: 0; }
+}
+
+.flame { transform-box: fill-box; transform-origin: 50% 100% !important; animation: flicker 1.1s ease-in-out infinite alternate; }
+@keyframes flicker {
+  0% { transform: scale(1, 1) skewX(0deg); }
+  50% { transform: scale(.9, 1.12) skewX(4deg); }
+  100% { transform: scale(1.05, .94) skewX(-4deg); }
+}
+
+.recoil { animation: recoil 7s ease-in-out infinite; }
+@keyframes recoil {
+  0%, 100% { transform: translate(0, 0); opacity: .95; }
+  45% { transform: translate(-46px, 10px); opacity: 1; }
+  60% { transform: translate(70px, -24px); opacity: .25; }
+  85% { transform: translate(70px, -24px); opacity: .2; }
+}
+.flare { animation: flare 7s ease-in-out infinite; }
+@keyframes flare {
+  0%, 40%, 100% { opacity: .35; }
+  55% { opacity: 1; }
+  80% { opacity: .7; }
+}
+
+.liftUp { animation: liftUp 7s cubic-bezier(.3, 0, .2, 1) both; }
+@keyframes liftUp { from { transform: translateY(330px); } to { transform: translateY(0); } }
+
+.riseUp { animation: riseUp 3s ease-out both; }
+@keyframes riseUp { from { transform: translateY(260px); } to { transform: translateY(0); } }
+
+.oho { animation: oho 5s ease-in-out infinite; }
+@keyframes oho {
+  0%, 100% { transform: translateY(-60px); opacity: 0; }
+  25% { opacity: 1; }
+  65% { transform: translateY(0); opacity: 1; }
+  85% { opacity: 0; }
+}

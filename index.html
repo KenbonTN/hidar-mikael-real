@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="gez">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ህዳር ሚካኤል — ስርዓተ ማህሌት</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+    <div class="band top"></div>
+
+    <div id="textside">
+      <header id="label">
+        <span class="orn"></span><span class="dia"></span>
+        <h2 id="labelText"></h2>
+        <span class="dia"></span><span class="orn"></span>
+      </header>
+      <div id="body"><div id="content"></div></div>
+    </div>
+
+    <div id="frame"><div id="sceneWrap"><canvas id="gl"></canvas><div id="scene"></div></div></div>
+
+    <div class="band bottom"></div>
+    <div id="count"></div>
+  </div>
+</div>
+<div id="hint">← → ለመቀየር &nbsp;·&nbsp; F ሙሉ ስክሪን</div>
+
+<script src="slides.js"></script>
+<script src="painted.js"></script>
+<script src="gl.js"></script>
+<script src="shaders.js"></script>
+<script src="scenes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
